@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login
+from django.views import View
 
 
 # Create your views here.
@@ -27,3 +28,12 @@ def login_view(request):
         login_form=AuthenticationForm()       
     context= {"login_form":login_form}
     return render(request,'views/login.html', context)
+
+class RegisterView(View):
+    def get(self, request):
+        register_form=UserCreationForm()
+        return render(request, "views/register.html", {"register_form":register_form})
+    
+    def post(self, request):
+        pass
+    
