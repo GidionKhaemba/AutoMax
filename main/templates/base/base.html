@@ -22,11 +22,22 @@
     
 </head>
 
-<body>
- {% block 'body'%}
 
+<body>
+ {% if messages %}
+ {% for message in messages %}
+
+ <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+    {{ message }}
+       
+ </div>
+ 
+ {% endfor %}
+ {% endif %}
+ {% block 'body' %}
  {% endblock %}
 </body>
+
 
 {% block 'footer' %}
 <footer class="footer text-muted bg-dark py-5">

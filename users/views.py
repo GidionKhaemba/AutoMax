@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
@@ -17,9 +18,11 @@ def login_view(request):
             print(user)
             if user is not None:
                 login(request, user)
+                messages.success(request, f'You have logged in as {username}')
                 return redirect('home')
+                
         else:
-                pass
+            messages.error(request, f'error occurred trying to log in')
     elif request.method=='GET':
         login_form=AuthenticationForm()       
     context= {"login_form":login_form}

@@ -75,6 +75,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'automax.wsgi.application'
 
 
+
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -104,6 +106,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+#messages settings
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR: "danger",
+    }
+
+
+
+#login settings
 LOGIN_REDIRECT_URL='/home/'
 LOGIN_URL='/login/'
 
