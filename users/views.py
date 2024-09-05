@@ -17,9 +17,8 @@ def login_view(request):
             print(user)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('/')
-                pass
-            else:
+                return redirect('home')
+        else:
                 pass
     elif request.method=='GET':
         login_form=AuthenticationForm()       
