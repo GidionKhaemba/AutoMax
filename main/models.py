@@ -21,3 +21,5 @@ class Listing(models.Model):
     location=models.OneToOneField(Location, on_delete=models.SET_NULL, null=True )
     image=models.ImageField(upload_to=user_listing_path)
     
+    def __str__(self):
+        return f'{self.seller.user.username}\'s Listing - {self.model}'
