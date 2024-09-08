@@ -15,7 +15,7 @@ class Listing(models.Model):
     vin=models.CharField(max_length=17)
     mileage=models.IntegerField(default=0)
     color=models.CharField(max_length=24)
-    decription=models.TextField()
+    description=models.TextField()
     engine=models.CharField(max_length=24) 
     transmission=models.CharField(max_length=24, choices=TRANSMISSION_OPTIONS)
     location=models.OneToOneField(Location, on_delete=models.SET_NULL, null=True )
