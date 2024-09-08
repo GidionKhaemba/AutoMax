@@ -14,4 +14,12 @@ def main_view(request):
     introduce = "AutoMax"
     return render(request, "views\main.html", {"introduce":introduce})
 
+@login_required
+def list_view(request):
+    if request.method=="POST":
+        pass
+    elif request.method=="GET":
+        context={}
+        return render(request, "views/list.html", context)
+
 
