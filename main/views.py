@@ -5,10 +5,14 @@ from .models import Listing
 from.forms import ListingForm
 from users.forms import LocationForm
 from django.contrib import messages
+from .filters import ListingFilter
+
+
 @login_required
 def home_view(request):
     listings=Listing.objects.all()
-    context={"listings":listings}
+    listing_filter=ListingFilter(request.GET, queryset=listings)
+    context={"listings":listings, 'listing_filter':listing_filter}
     return render(request, 'views/home.html', context)
 
 
