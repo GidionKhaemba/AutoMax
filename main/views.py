@@ -56,5 +56,5 @@ def listing_view(request, id):
     
         messages.error(request, f'invalid uuid {id} was provided for listing')    
         return redirect('home')    
-    context={}
+    context={"listing":listing}
     return render(request, 'views/listing.html', context)
