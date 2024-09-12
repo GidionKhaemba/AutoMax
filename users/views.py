@@ -70,12 +70,14 @@ class ProfileView(View):
                  }
         return render(request, 'views/profile.html', context)
     def post(self, request):
+        user_listings=Listing.objects.filter(seller=request.user.profile)
         user_form=UserForm(request.POST, instance=request.user)
         profile_form=ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         location_form=LocationForm(request.POST, instance=request.user.profile.location)
         context={'user_form':user_form,
                  'profile_form':profile_form, 
-                 'location_form':location_form 
+                 'location_form':location_form,
+                 'user_listings':user_listings
                  }
         if user_form.is_valid() and profile_form.is_valid() and location_form.is_valid():
             user_form.save()

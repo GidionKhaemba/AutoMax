@@ -23,7 +23,7 @@
                 <a href="{% url "listing" listing.id %}" type="button"
                     class="btn btn-sm btn-outline-secondary">View</a>
                 {% if listing.seller.user == request.user %}
-                <a href="" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a href="{%url 'edit' listing.id%}" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
                 {% endif %}
             </div>
             <small class="text-muted">{{listing.updated_at}}</small>

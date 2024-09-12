@@ -1,5 +1,6 @@
 from django import forms
 from .models import Location, User, Profile
+from .widgets import CustomPictureImageFieldWisget
 
 
 
@@ -10,9 +11,13 @@ class UserForm(forms.ModelForm):
         fields=('username', 'first_name', 'last_name')
         
 class ProfileForm(forms.ModelForm):
+    photo=forms.ImageField(widget=CustomPictureImageFieldWisget)   
     class Meta:
         model=Profile
         fields=('photo', 'bio', 'phone_number')
+        widgets = {
+            'bio': forms.Textarea(attrs={'rows': 4, 'cols': 40}),  # Textarea for bio
+        }
      
 class LocationForm(forms.ModelForm):
     address_1=forms.CharField(required=True)
