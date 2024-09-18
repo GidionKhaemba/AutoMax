@@ -75,7 +75,7 @@ class ProfileView(View):
     def post(self, request):
         user_listings=Listing.objects.filter(seller=request.user.profile)
         user_form=UserForm(request.POST, instance=request.user)
-        user_liked_listings=LikedListing.objects.filter(profile=request.user).all()
+        user_liked_listings=LikedListing.objects.filter(profile=request.user.profile).all()
         profile_form=ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         location_form=LocationForm(request.POST, instance=request.user.profile.location)
         context={'user_form':user_form,
@@ -90,6 +90,7 @@ class ProfileView(View):
             profile_form.save()
             location_form.save()
             messages.success(request, 'profile updated successfully!')
+            return redirect("profile")
         else:
             messages.error(request, 'error updating profile!')
             

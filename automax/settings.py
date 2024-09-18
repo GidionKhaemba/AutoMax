@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 import environ
 
+
 #initialize Environ
 env=environ.Env()
 env.read_env()
@@ -33,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', default=False)
+DEBUG = True if env("DJANGODEVELOPMENTMODE") =="Debug" else False 
 
 ALLOWED_HOSTS = []
 
@@ -63,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'automax.urls'
@@ -91,12 +94,27 @@ WSGI_APPLICATION = 'automax.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+if env('USEDEBUGDB', default='False')=='True':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': env('DBNAME'),
+            'USER': env('DBUSER'),
+            'PASSWORD': env('DBPASSWORD'),
+            'HOST': env('DBHOST'),
+            'PORT': env('DBPORT'),
+            
+        }
+    }
+        
 
 
 # Password validation
@@ -148,6 +166,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT=os.path.join (BASE_DIR, 'static')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 #Media Files (Uploads)
 
@@ -155,6 +177,14 @@ import os
 
 MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+AWS_ACCESS_KEY_ID=env("BUCKETEER_AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY=env("BUCKETEER_AWS_SECRET_ACCESS_KEY")
+AWS_S3_REGION_NAME=env("BUCKETEER_AWS_S3_REGION_NAME")
+AWS_BUCKET_NAME=env("BUCKETEER_BUCKET_NAME")
+
+
 
 # Django Crispy Forms Settings
 
