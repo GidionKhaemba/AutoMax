@@ -30,7 +30,9 @@
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for listing in listing_filter.qs %}
-                <p>{% include "components/listings_cards.html" %}</p>
+                <dir class="col">
+                    <p>{% include "components/listings_cards.html" %}</p>
+                </dir>
                 {% endfor %}
 
             </div>
